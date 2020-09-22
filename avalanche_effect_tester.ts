@@ -21,12 +21,12 @@ const prepareDataForEncryption = (
 ) => {
 	const array = new Uint8Array(36)
 
-	array[0] = 0x33 				// '3'
-	array[1] = 0x0A 				// '\n'
+	array[0] = 0x33					// '3'
+	array[1] = 0x0A					// '\n'
 	array.set(plainText, 2)	// plainText
-	array[18] = 0x0A 				// '\n'
+	array[18] = 0x0A				// '\n'
 	array.set(key, 19)			// key
-	array[35] = 0x0A 				// '\n'
+	array[35] = 0x0A				// '\n'
 
 	return array
 }
