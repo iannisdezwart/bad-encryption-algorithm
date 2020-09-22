@@ -49,6 +49,24 @@ Bonus: test the avalanche effect of a version of the algorithm with `avalanche_e
 
 Edit `#include "5.hpp"` in `avalanche_effect_tester.cpp:3` according to the version you want to get the average avalanche effect of.
 
+Compile it with:
+
+```
+$ g++ avalanche_effect_tester.cpp -o avalanche_effect_tester
+```
+
+And run it:
+
+```
+$ ./avalanche_effect_tester
+> Performed 1000 rounds
+> Performed 2000 rounds
+> ...
+> Performed 9000 rounds
+> Performed 10000 rounds
+> Average avalanche effect: 0.497213
+```
+
 ---
 
 Long story short: use AES.
