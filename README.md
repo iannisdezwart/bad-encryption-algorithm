@@ -7,7 +7,7 @@ To use the best encryption algorithm in the world, clone thise repo and select t
 
 There are 5 versions (`1.hpp`, `2.hpp`, `3.hpp`, `4.hpp`, `5.hpp`).
 Each version is supposed to be better than its ancestor.
-Change line 3 (containing `#include "5.hpp"`) in `encrypt.cpp` according to the version you want to use.
+Edit `#include "5.hpp"` in `encrypt.cpp:3` according to the version you want to use.
 
 Then compile the file:
 
@@ -42,6 +42,12 @@ MyVerySecretKey						# We input the key in ascii
 ```
 
 Wow, that actually worked???
+
+---
+
+Bonus: test the avalanche effect of a version of the algorithm with `avalanche_effect_tester.cpp`.
+
+Edit `#include "5.hpp"` in `avalanche_effect_tester.cpp:3` according to the version you want to get the average avalanche effect of.
 
 ---
 
