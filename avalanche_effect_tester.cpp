@@ -92,7 +92,7 @@ void perform_round()
 
 int main()
 {
-	for (int i = 0; i < total_rounds; i++) {
+	for (int i = 1; i <= total_rounds; i++) {
 		perform_round();
 
 		if (i % 1000 == 0) {
