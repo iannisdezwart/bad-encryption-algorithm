@@ -29,10 +29,8 @@ using namespace std;
 
 // Globals
 
-const int len = 16;
-
-uint8_t message[len] = {};
-uint8_t key[len] = {};
+uint8_t message[16] = {};
+uint8_t key[16] = {};
 
 // Lookup tables
 
@@ -105,13 +103,13 @@ void shift_message()
 
 	// Shift the message
 
-	for (int i = 1; i < len; i++) {
+	for (int i = 1; i < 16; i++) {
 		message[i - 1] = message[i];
 	}
 
 	// Place the held character at the end
 
-	message[len - 1] = held_char;
+	message[16 - 1] = held_char;
 }
 
 // This function unshifts the message
@@ -120,11 +118,11 @@ void unshift_message()
 {
 	// Hold the last character
 
-	uint8_t held_char = message[len - 1];
+	uint8_t held_char = message[16 - 1];
 
 	// Shift the message
 
-	for (int i = len - 1; i > 0; i--) {
+	for (int i = 16 - 1; i > 0; i--) {
 		message[i] = message[i - 1];
 	}
 
@@ -139,7 +137,7 @@ void encrypt_message_with_key()
 {
 	// 1) Substitute each byte using the s-box
 
-	for (int i = 0; i < len; i++) {
+	for (int i = 0; i < 16; i++) {
 		message[i] = substitute_byte(message[i], s_box);
 	}
 
@@ -149,7 +147,7 @@ void encrypt_message_with_key()
 
 	// 3) XOR the i-th byte of the message with the i-th byte of the key
 
-	for (int i = 0; i < len; i++) {
+	for (int i = 0; i < 16; i++) {
 		message[i] ^= key[i];
 	}
 }
@@ -160,7 +158,7 @@ void decrypt_message_with_key()
 {
 	// 1) XOR the i-th byte of the message with the i-th byte of the key
 
-	for (int i = 0; i < len; i++) {
+	for (int i = 0; i < 16; i++) {
 		message[i] ^= key[i];
 	}
 
@@ -170,19 +168,19 @@ void decrypt_message_with_key()
 
 	// 3) Substitute each byte using the inverse s-box
 
-	for (int i = 0; i < len; i++) {
+	for (int i = 0; i < 16; i++) {
 		message[i] = substitute_byte(message[i], inv_s_box);
 	}
 }
 
-// This function will scan at max len bytes from stdin
+// This function will scan at max 16 bytes from stdin
 // It is used to retrieve the plain message and the key
 
 void scan(uint8_t *dest)
 {
 	int read_bytes = 0;
 
-	while (read_bytes < len) {
+	while (read_bytes < 16) {
 		// Get one char from stdin
 
 		uint8_t next_char = fgetc(stdin);
@@ -197,7 +195,7 @@ void scan(uint8_t *dest)
 
 	// Remove trailing newline from stdin
 
-	if (read_bytes == len) {
+	if (read_bytes == 16) {
 		if (fgetc(stdin) != '\n') {
 			cout << "Input buffer too large";
 			exit(1);
