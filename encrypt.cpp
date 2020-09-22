@@ -1,6 +1,6 @@
 #include <iostream>
 #include <stdint.h>
-#include "5.h"
+#include "5.hpp"
 using namespace std;
 
 // This function will scan at max 16 bytes from stdin
