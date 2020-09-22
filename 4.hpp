@@ -28,7 +28,7 @@
 
 #include <iostream>
 #include <stdint.h>
-#include "reijndael-s-box.h"
+#include "reijndael-s-box.hpp"
 using namespace std;
 
 // Globals
