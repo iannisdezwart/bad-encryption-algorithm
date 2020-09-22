@@ -245,6 +245,33 @@ void scan(uint8_t *dest)
 	}
 }
 
+// This function does the same as scan() but uses hex encoded
+// bytes as its input
+
+void scan_hex(uint8_t *dest)
+{
+	int read_bytes = 0;
+
+	while (read_bytes < 16) {
+		// Get one char from stdin
+
+		uint8_t next_char;
+		scanf("%hhx", &next_char);
+
+		dest[read_bytes] = next_char;
+		read_bytes++;
+	}
+
+	// Remove trailing newline from stdin
+
+	if (read_bytes == 16) {
+		if (fgetc(stdin) != '\n') {
+			cout << "Input buffer too large";
+			exit(1);
+		}
+	}
+}
+
 // This function prints the raw bytes of the message to stdout
 
 void print_message()
@@ -265,15 +292,6 @@ void print_message_hex()
 	cout << '\n';
 }
 
-// This function terminates the program
-// It is called when the user gives bad input to our program
-
-void die()
-{
-	cout << "U good?\n";
-	exit(1);
-}
-
 // Our dear entry point
 
 int main()
@@ -285,7 +303,8 @@ int main()
 	// Expect a newline from stdin, else die
 
 	if (fgetc(stdin) != '\n') {
-		die();
+		cout << "Expected a newline after the choice";
+		exit(1);
 	}
 
 	if (choice == '1' || choice == '3') {
@@ -309,7 +328,8 @@ int main()
 
 		// Scan the ciphertext and the key from stdin
 
-		scan(message);
+		if (choice == '2') scan_hex(message);
+		else scan(message);
 		scan(key);
 
 		// Decrypt the cihpertext
@@ -323,6 +343,7 @@ int main()
 	} else {
 		// User made a choice that does not exist
 
-		die();
+		cout << "That choice does not exist";
+		exit(1);
 	}
 }
