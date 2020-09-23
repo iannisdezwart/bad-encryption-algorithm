@@ -24,14 +24,9 @@
 #include <stdint.h>
 using namespace std;
 
-// Globals
-
-uint8_t message[16] = {};
-uint8_t key[16] = {};
-
 // This function is the placeholder for the encryption procedure
 
-void encrypt_message_with_key()
+void encrypt_message_with_key(uint8_t *message, uint8_t *key)
 {
 	// 1) XOR the i-th byte of the message with the i-th byte of the key
 
@@ -42,7 +37,7 @@ void encrypt_message_with_key()
 
 // This function is the placeholder for the decryption procedure
 
-void decrypt_message_with_key()
+void decrypt_message_with_key(uint8_t *message, uint8_t *key)
 {
 	// 1) XOR the i-th byte of the message with the i-th byte of the key
 

@@ -28,11 +28,6 @@
 #include "reijndael_s_box.hpp"
 using namespace std;
 
-// Globals
-
-uint8_t message[16] = {};
-uint8_t key[16] = {};
-
 // This function does the substitution work
 
 uint8_t substitute_byte(uint8_t byte, uint8_t lookup_table[16][16])
@@ -52,7 +47,7 @@ uint8_t substitute_byte(uint8_t byte, uint8_t lookup_table[16][16])
 
 // This function shifts the message
 
-void shift_message()
+void shift_message(uint8_t *message)
 {
 	// Hold the first character
 
@@ -71,7 +66,7 @@ void shift_message()
 
 // This function unshifts the message
 
-void unshift_message()
+void unshift_message(uint8_t *message)
 {
 	// Hold the last character
 
@@ -90,7 +85,7 @@ void unshift_message()
 
 // This function is the placeholder for the encryption procedure
 
-void encrypt_message_with_key()
+void encrypt_message_with_key(uint8_t *message, uint8_t *key)
 {
 	// 1) Substitute each byte using the s-box
 
@@ -100,7 +95,7 @@ void encrypt_message_with_key()
 
 	// 2) Shift the message
 
-	shift_message();
+	shift_message(message);
 
 	// 3) XOR the i-th byte of the message with the i-th byte of the key
 
@@ -111,7 +106,7 @@ void encrypt_message_with_key()
 
 // This function is the placeholder for the decryption procedure
 
-void decrypt_message_with_key()
+void decrypt_message_with_key(uint8_t *message, uint8_t *key)
 {
 	// 1) XOR the i-th byte of the message with the i-th byte of the key
 
@@ -121,7 +116,7 @@ void decrypt_message_with_key()
 
 	// 2) Unshift the message
 
-	unshift_message();
+	unshift_message(message);
 
 	// 3) Substitute each byte using the inverse s-box
 

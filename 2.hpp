@@ -29,11 +29,6 @@
 #include "reijndael_s_box.hpp"
 using namespace std;
 
-// Globals
-
-uint8_t message[16] = {};
-uint8_t key[16] = {};
-
 // This function does the substitution work
 
 uint8_t substitute_byte(uint8_t byte, uint8_t lookup_table[16][16])
@@ -53,7 +48,7 @@ uint8_t substitute_byte(uint8_t byte, uint8_t lookup_table[16][16])
 
 // This function is the placeholder for the encryption procedure
 
-void encrypt_message_with_key()
+void encrypt_message_with_key(uint8_t *message, uint8_t *key)
 {
 	// 1) Substitute each byte using the s-box
 
@@ -70,7 +65,7 @@ void encrypt_message_with_key()
 
 // This function is the placeholder for the decryption procedure
 
-void decrypt_message_with_key()
+void decrypt_message_with_key(uint8_t *message, uint8_t *key)
 {
 	// 1) XOR the i-th byte of the message with the i-th byte of the key
 

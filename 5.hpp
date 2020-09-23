@@ -32,9 +32,6 @@ using namespace std;
 
 const int rounds = 16;
 
-uint8_t message[16] = {};
-uint8_t key[16] = {};
-
 // This function does the substitution work
 
 uint8_t substitute_byte(uint8_t byte, uint8_t lookup_table[16][16])
@@ -54,7 +51,7 @@ uint8_t substitute_byte(uint8_t byte, uint8_t lookup_table[16][16])
 
 // This function shifts the message
 
-void shift_message()
+void shift_message(uint8_t *message)
 {
 	// Hold the first character
 
@@ -73,7 +70,7 @@ void shift_message()
 
 // This function unshifts the message
 
-void unshift_message()
+void unshift_message(uint8_t *message)
 {
 	// Hold the last character
 
@@ -93,7 +90,7 @@ void unshift_message()
 // This function mixes the the message, for a
 // higher avalanche effect
 
-void mix_message()
+void mix_message(uint8_t *message)
 {
 	// Calculate the xor_sum
 
@@ -112,11 +109,11 @@ void mix_message()
 
 // The inverse of mix_message() is just itself
 
-#define unmix_message() mix_message()
+#define unmix_message(message) mix_message(message)
 
 // This function is the placeholder for the encryption procedure
 
-void encrypt_message_with_key()
+void encrypt_message_with_key(uint8_t *message, uint8_t *key)
 {
 	// 1) Do 16 rounds
 
@@ -129,11 +126,11 @@ void encrypt_message_with_key()
 
 		// 1.2) Shift the message
 
-		shift_message();
+		shift_message(message);
 
 		// 1.3 Mix message
 
-		mix_message();
+		mix_message(message);
 
 		// 1.4) XOR the i-th byte of the message with the i-th byte of the key
 
@@ -145,7 +142,7 @@ void encrypt_message_with_key()
 
 // This function is the placeholder for the decryption procedure
 
-void decrypt_message_with_key()
+void decrypt_message_with_key(uint8_t *message, uint8_t *key)
 {
 	// 1) Do 16 rounds
 
@@ -158,11 +155,11 @@ void decrypt_message_with_key()
 
 		// 1.2 Unmix message
 
-		unmix_message();
+		unmix_message(message);
 
 		// 1.3) Unshift the message
 
-		unshift_message();
+		unshift_message(message);
 
 		// 1.4) Substitute each byte using the inverse s-box
 
