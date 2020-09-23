@@ -91,11 +91,13 @@ void perform_round()
 }
 
 const int hardware_concurrency = thread::hardware_concurrency();
-const int total_rounds = 1E6;
+const int total_rounds = 1E5;
 int performed_rounds = 0;
 
 void worker()
 {
+	// Check if there is work to do
+
 	while (performed_rounds < total_rounds) {
 		perform_round();
 		performed_rounds++;
@@ -110,9 +112,13 @@ int main()
 {
 	thread thread_pool[hardware_concurrency];
 
+	// Initialise threads
+
 	for (int i = 0; i < hardware_concurrency; i++) {
 		thread_pool[i] = thread(worker);
 	}
+
+	// Wait for all threads to finish
 
 	for (int i = 0; i < hardware_concurrency; i++) {
 		thread_pool[i].join();
