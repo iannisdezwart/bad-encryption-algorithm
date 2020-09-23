@@ -12,10 +12,6 @@ uint8_t second_plain_text[16] = {};
 
 double avalanche_effect_sum = 0;
 
-const int hardware_concurrency = thread::hardware_concurrency();
-const int total_rounds = 1E6;
-int performed_rounds = 0;
-
 int random(int max)
 {
 	random_device rd;
@@ -94,16 +90,14 @@ void perform_round()
 	avalanche_effect_sum += avalanche_effect / 128;
 }
 
-void execute_batch()
+const int hardware_concurrency = thread::hardware_concurrency();
+const int total_rounds = 1E6;
+int performed_rounds = 0;
+
+void worker()
 {
-	thread thread_pool[hardware_concurrency];
-
-	for (int i = 0; i < hardware_concurrency; i++) {
-		thread_pool[i] = thread(perform_round);
-	}
-
-	for (int i = 0; i < hardware_concurrency; i++) {
-		thread_pool[i].join();
+	while (performed_rounds < total_rounds) {
+		perform_round();
 		performed_rounds++;
 
 		if (performed_rounds % 1000 == 0) {
@@ -114,10 +108,14 @@ void execute_batch()
 
 int main()
 {
-	cout << hardware_concurrency;
+	thread thread_pool[hardware_concurrency];
 
-	while (performed_rounds < total_rounds) {
-		execute_batch();
+	for (int i = 0; i < hardware_concurrency; i++) {
+		thread_pool[i] = thread(worker);
+	}
+
+	for (int i = 0; i < hardware_concurrency; i++) {
+		thread_pool[i].join();
 	}
 
 	printf("Average avalanche effect: %lf\n", avalanche_effect_sum / total_rounds);
