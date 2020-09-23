@@ -56,13 +56,6 @@ Texts *generate_texts()
 	return texts;
 }
 
-void copy_message(uint8_t *src, uint8_t *dest)
-{
-	for (int i = 0; i < 16; i++) {
-		dest[i] = src[i];
-	}
-}
-
 int calculate_avalanche_effect(uint8_t *cipher_text1, uint8_t *cipher_text2)
 {
 	int count = 0;
