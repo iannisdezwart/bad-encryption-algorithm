@@ -2,6 +2,7 @@
 #include <random>
 #include "5.hpp"
 #include "scanning_and_printing.hpp"
+#include <thread>
 using namespace std;
 
 // Globals
@@ -10,7 +11,10 @@ uint8_t first_plain_text[16] = {};
 uint8_t second_plain_text[16] = {};
 
 double avalanche_effect_sum = 0;
-const int total_rounds = 1E4;
+
+const int hardware_concurrency = thread::hardware_concurrency();
+const int total_rounds = 1E6;
+int performed_rounds = 0;
 
 int random(int max)
 {
@@ -90,14 +94,30 @@ void perform_round()
 	avalanche_effect_sum += avalanche_effect / 128;
 }
 
+void execute_batch()
+{
+	thread thread_pool[hardware_concurrency];
+
+	for (int i = 0; i < hardware_concurrency; i++) {
+		thread_pool[i] = thread(perform_round);
+	}
+
+	for (int i = 0; i < hardware_concurrency; i++) {
+		thread_pool[i].join();
+		performed_rounds++;
+
+		if (performed_rounds % 1000 == 0) {
+			printf("Performed %d rounds\n", performed_rounds);
+		}
+	}
+}
+
 int main()
 {
-	for (int i = 1; i <= total_rounds; i++) {
-		perform_round();
+	cout << hardware_concurrency;
 
-		if (i % 1000 == 0) {
-			printf("Performed %d rounds\n", i);
-		}
+	while (performed_rounds < total_rounds) {
+		execute_batch();
 	}
 
 	printf("Average avalanche effect: %lf\n", avalanche_effect_sum / total_rounds);
