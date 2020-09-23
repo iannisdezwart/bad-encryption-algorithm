@@ -93,10 +93,12 @@ void perform_round()
 		texts->second_message
 	);
 	avalanche_effect_sum += avalanche_effect / 128;
+
+	delete texts;
 }
 
 const int hardware_concurrency = thread::hardware_concurrency();
-const int total_rounds = 1E5;
+const int total_rounds = 1E6;
 int performed_rounds = 0;
 
 void worker()
