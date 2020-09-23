@@ -98,7 +98,7 @@ void perform_round()
 }
 
 const int hardware_concurrency = thread::hardware_concurrency();
-const int total_rounds = 1E6;
+const int total_rounds = 1E5;
 int performed_rounds = 0;
 
 void worker()
