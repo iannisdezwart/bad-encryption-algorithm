@@ -24,21 +24,27 @@ int main()
 
 		// Scan the plaintext and the key from stdin
 
+		uint8_t message[16] = {};
+		uint8_t key[16] = {};
+
 		scan(message);
 		scan(key);
 
 		// Encrypt the plaintext
 
-		encrypt_message_with_key();
+		encrypt_message_with_key(message, key);
 
 		// Print the ciphertext to stdout
 
-		if (choice == '1') print_message_hex();
-		else print_message();
+		if (choice == '1') print_message_hex(message);
+		else print_message(message);
 	} else if (choice == '2' || choice == '4') {
 		// Decrypt
 
 		// Scan the ciphertext and the key from stdin
+
+		uint8_t message[16] = {};
+		uint8_t key[16] = {};
 
 		if (choice == '2') scan_hex(message);
 		else scan(message);
@@ -46,12 +52,12 @@ int main()
 
 		// Decrypt the cihpertext
 
-		decrypt_message_with_key();
+		decrypt_message_with_key(message, key);
 
 		// Print the plaintext to stdout
 
-		if (choice == '2') print_message_hex();
-		else print_message();
+		if (choice == '2') print_message_hex(message);
+		else print_message(message);
 	} else {
 		// User made a choice that does not exist
 

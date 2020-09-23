@@ -1,11 +1,6 @@
 #include <iostream>
 using namespace std;
 
-// Globals
-
-extern uint8_t message[16];
-extern uint8_t key[16];
-
 // This function will scan at max 16 bytes from stdin
 // It is used to retrieve the plain message and the key
 
@@ -65,7 +60,7 @@ void scan_hex(uint8_t *dest)
 
 // This function prints the raw bytes of the message to stdout
 
-void print_message()
+void print_message(uint8_t *message)
 {
 	for (int i = 0; i < 16; i++) {
 		printf("%c", message[i]);
@@ -74,11 +69,11 @@ void print_message()
 
 // This function prints the message as hex bytes to stdout
 
-void print_message_hex()
+void print_message_hex(uint8_t *message)
 {
-	for (int i = 0; i < 16; i++) {
+	for (int i = 0; i < 15; i++) {
 		printf("%02x ", message[i]);
 	}
 
-	cout << '\n';
+	printf("%02x\n", message[15]);
 }

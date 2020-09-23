@@ -7,8 +7,11 @@ using namespace std;
 
 // Globals
 
-uint8_t first_plain_text[16] = {};
-uint8_t second_plain_text[16] = {};
+struct Texts {
+	uint8_t first_message[16];
+	uint8_t second_message[16];
+	uint8_t key[16];
+};
 
 double avalanche_effect_sum = 0;
 
@@ -20,8 +23,10 @@ int random(int max)
 	return distr(gen);
 }
 
-void generate_texts()
+Texts *generate_texts()
 {
+	Texts *texts = new Texts;
+
 	int altered_index = random(15);
 
 	// Generate random plain texts and one random key
@@ -29,22 +34,26 @@ void generate_texts()
 	for (int i = 0; i < 16; i++) {
 		// Add a random byte to the first plain text
 
-		first_plain_text[i] = random(255);
+		texts->first_message[i] = random(255);
 
 		// Set a byte of the second plain text
 
 		if (i == altered_index) {
 			// Alter this byte
 
-			second_plain_text[i] = random(255);
+			// texts->second_message[i] = random(255);
+			texts->second_message[i] = texts->first_message[i] ^ (1 << random(7));
+			// texts->second_message[i] = texts->first_message[i];
 		} else {
 			// Copy the byte
 
-			second_plain_text[i] = first_plain_text[i];
+			texts->second_message[i] = texts->first_message[i];
 		}
 
-		key[i] = random(255);
+		texts->key[i] = random(255);
 	}
+
+	return texts;
 }
 
 void copy_message(uint8_t *src, uint8_t *dest)
@@ -69,24 +78,20 @@ int calculate_avalanche_effect(uint8_t *cipher_text1, uint8_t *cipher_text2)
 
 void perform_round()
 {
-	generate_texts();
+	Texts *texts = generate_texts();
 
 	// Encrypt the first plain text
 
-	copy_message(first_plain_text, message);
-	encrypt_message_with_key();
-
-	// Hold the first ciphertext
-
-	uint8_t held_cipher_text[16];
-	copy_message(message, held_cipher_text);
+	encrypt_message_with_key(texts->first_message, texts->key);
 
 	// Encrypt the second plain text
 
-	copy_message(second_plain_text, message);
-	encrypt_message_with_key();
+	encrypt_message_with_key(texts->second_message, texts->key);
 
-	double avalanche_effect = calculate_avalanche_effect(message, held_cipher_text);
+	double avalanche_effect = calculate_avalanche_effect(
+		texts->first_message,
+		texts->second_message
+	);
 	avalanche_effect_sum += avalanche_effect / 128;
 }
 
