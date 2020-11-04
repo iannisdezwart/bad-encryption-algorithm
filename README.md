@@ -1,5 +1,5 @@
 # bad-encryption-algorithm
-The learning process of developing an encryption algorithm
+The learning process of developing a symmetric encryption algorithm
 
 ---
 
