@@ -3,7 +3,7 @@ The learning process of developing a symmetric encryption algorithm
 
 ---
 
-To use the best encryption algorithm in the world, clone thise repo and select the version you want to use. (Don't even bother using version 1-4, they are utter rubbish...)
+To use the best encryption algorithm in the world, clone this repo and select the version you want to use. (Don't even bother using version 1-4, they are utter rubbish...)
 
 There are 5 versions (`1.hpp`, `2.hpp`, `3.hpp`, `4.hpp`, `5.hpp`).
 Each version is supposed to be better than its ancestor.
