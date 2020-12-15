@@ -52,7 +52,7 @@ Edit `#include "5.hpp"` in `avalanche_effect_tester.cpp:3` according to the vers
 Compile it with:
 
 ```
-$ g++ avalanche_effect_tester.cpp -o avalanche_effect_tester
+$ g++ avalanche_effect_tester.cpp -o avalanche_effect_tester -pthread
 ```
 
 And run it:
